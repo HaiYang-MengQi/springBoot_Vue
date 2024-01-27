@@ -1,10 +1,13 @@
 package com.codecart.pojo;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+//todo 非常不明白为什么加@data
 public class Result <T>{
     private Integer code;
     private String message;
@@ -32,6 +35,6 @@ public class Result <T>{
      * @return 错误结果
      */
     public static Result error(String message){
-        return new Result<>(500,message,null);
+        return new Result<>(666,message,null);
     }
 }
