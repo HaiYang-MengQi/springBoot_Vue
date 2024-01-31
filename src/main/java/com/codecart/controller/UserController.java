@@ -5,9 +5,12 @@ import com.codecart.pojo.Result;
 import com.codecart.service.UserService;
 import com.codecart.pojo.User;
 import com.codecart.util.JWTUtils;
+import com.codecart.util.LocalDataUtils;
 import com.codecart.util.ThreadLocalUtils;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +51,7 @@ public class UserController {
             //存在即校验代码
         //todo 此处应该使用加密算法
             if(password.equals(u.getPassword())){
+                userService.updateLoginTime(u.getId());
                 Map<String, Object> map = new HashMap<>();
                 map.put("id", u.getId());
                 map.put("username", u.getUsername());
@@ -80,5 +84,35 @@ public class UserController {
         System.out.println(user);
         userService.update(user);
         return Result.success();
+    }
+
+    @PatchMapping("updateAvatar")
+    public Result updateAvatar(@RequestParam("avatar") @URL String avatar){
+        Map<String, Object> m = ThreadLocalUtils.get();
+        Integer id = (Integer) m.get("id");
+        userService.updateAvatar(id,avatar);
+        return Result.success("头像修改成功!");
+    }
+
+    @PatchMapping("/updatePwd")
+    public Result updatePwd(@RequestBody Map<String, Object> map){
+        String oldPwd = (String) map.get("oldPwd");
+        String newPwd = (String) map.get("newPwd");
+        String rePwd = (String) map.get("rePwd");
+        System.out.println("oldPwd:"+oldPwd+" newPwd:"+newPwd+" rePwd:"+rePwd);
+        if(!StringUtils.hasLength(oldPwd) || !StringUtils.hasLength(newPwd) || !StringUtils.hasLength(rePwd) || !StringUtils.hasLength(rePwd)){
+            return Result.error("缺少必要的参数!");
+        }
+        Map<String, Object> m = ThreadLocalUtils.get();
+        String username = (String) m.get("username");
+        User loginUser = userService.findByUsername(username);
+        if (!oldPwd.equals(loginUser.getPassword())){
+            return Result.error("旧密码输入错误!");
+        }
+        if(!newPwd.equals(rePwd)){
+            return Result.error("两次输入的密码不一致!");
+        }
+        userService.updatePwd(newPwd);
+        return Result.success("密码修改成功!");
     }
 }

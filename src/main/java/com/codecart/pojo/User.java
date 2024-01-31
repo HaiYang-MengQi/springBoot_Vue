@@ -13,10 +13,12 @@ import java.util.Date;
 public class User {
     @NotNull
     private Integer id;
-    private String name;
     @NotEmpty
+    private String name;
     private String username;
+    @JsonIgnore
     private String password;
+    private String avatar;
     private char gender;
     private byte age;
     private String address;
