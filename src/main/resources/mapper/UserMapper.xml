@@ -3,10 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codecart.mapper.UserMapper">
-    <insert id="register" parameterType="com.codecart.pojo.User">
-            insert into user(username,password) values(#{username},#{password})
+    <insert id="register" parameterType="user">
+            insert into user(username,password,registration_time) values(#{username},#{password},#{registerTime})
     </insert>
-    <select id="getUserByUsername" parameterType="java.lang.String" resultType="com.codecart.pojo.User">
+    <select id="getUserByUsername" parameterType="java.lang.String" resultType="user">
         select * from user where username = #{username}
     </select>
+    <update id="update" parameterType="user">
+        update user
+        <set>
+            <if test="name!=null and name!= ''">name = #{name},</if>
+            <if test="password!=null and password!= ''">password = #{password},</if>
+            <if test="gender!=null and gender!= ''">gender = #{gender},</if>
+            <if test="age!=null and age!= ''">age = #{age},</if>
+            <if test="address!=null and address!= ''">address = #{address},</if>
+            <if test="email!=null and email!= ''">email = #{email},</if>
+            <if test="phone_number!=null and phone_number!= ''">phone_number = #{phone_number},</if>
+            <if test="birthday!=null and birthday!= ''">birthday = #{birthday},</if>
+            <if test="education!=null and education!= ''">education = #{education},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

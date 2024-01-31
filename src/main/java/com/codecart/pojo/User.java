@@ -1,37 +1,33 @@
 package com.codecart.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.NonNull;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class User {
+    @NotNull
     private Integer id;
+    private String name;
+    @NotEmpty
     private String username;
-    @JsonIgnore
     private String password;
-    @JsonIgnore
     private char gender;
-    @JsonIgnore
     private byte age;
-    @JsonIgnore
     private String address;
-    @JsonIgnore
+    @NotEmpty
+    @Email
     private String email;
-    @JsonIgnore
-    private LocalDateTime registration_time;
-    @JsonIgnore
-    private LocalDateTime last_login_time;
-    @JsonIgnore
-    private UserStatus status;
-    @JsonIgnore
-    private UserType type;
-    @JsonIgnore
+    private String registration_time;
+    private String last_login_time;
+    private UserStatus user_status;
+    private UserType user_type;
     private String phone_number;
-    @JsonIgnore
-    private Date birthday;
-    @JsonIgnore
+    private String birthday;
     private String education;
 }

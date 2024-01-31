@@ -15,13 +15,6 @@ import java.util.Map;
 public class CommentController {
     @GetMapping("/list")
     public Result list() {
-//        try{
-//            Map<String, Object> claims =  JWTUtils.parseToken(token);
-//            return Result.success("加载所有评论");
-//        }catch (Exception e){
-//            response.setStatus(401);
-//            return Result.error("未登录");
-//        }
         return Result.success("加载所有评论");
     }
 

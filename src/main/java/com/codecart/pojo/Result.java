@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-//todo 非常不明白为什么加@data
+//不添加@Data注解,就不能够使用set,get方法,框架将Controller中的方法映射到Result中不知道如何转换了
 public class Result <T>{
     private Integer code;
     private String message;
