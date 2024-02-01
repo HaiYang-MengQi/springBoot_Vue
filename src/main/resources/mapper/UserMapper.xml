@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.codecart.mapper.UserMapper">
+<mapper namespace="com.codeCart.mapper.UserMapper">
     <insert id="register" parameterType="user">
             insert into user(username,password,registration_time) values(#{username},#{password},now())
     </insert>
@@ -11,7 +11,8 @@
     </select>
     <update id="updateLoginTime" parameterType="Integer">
         update user set last_login_time = now()
-            <where>id = #{id}</where>
+            where
+                id = #{id}
     </update>
     <update id="update" parameterType="user">
         update user
@@ -21,7 +22,7 @@
             <if test="age!=null and age!= ''">age = #{age},</if>
             <if test="address!=null and address!= ''">address = #{address},</if>
             <if test="email!=null and email!= ''">email = #{email},</if>
-            <if test="phone_number!=null and phone_number!= ''">phone_number = #{phone_number},</if>
+            <if test="phoneNumber!=null and phoneNumber!= ''">phone_number = #{phoneNumber},</if>
             <if test="birthday!=null and birthday!= ''">birthday = #{birthday},</if>
             <if test="education!=null and education!= ''">education = #{education},</if>
         </set>
@@ -31,14 +32,13 @@
     </update>
     <update id="updateAvatar" parameterType="Integer">
         update user set avatar = #{avatar}
-            <where>
+            where
                 id = #{id}
-            </where>
     </update>
     <update id="updatePwd" parameterType="java.lang.String">
         update user set password = #{newPwd} , passwordmodified = now()
-            <where>
+            where
                 id = #{id}
-            </where>
+
     </update>
 </mapper>
