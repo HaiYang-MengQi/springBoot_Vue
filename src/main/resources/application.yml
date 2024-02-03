@@ -9,3 +9,6 @@ mybatis:
   type-aliases-package: com.codecart.pojo
   configuration:
     map-underscore-to-camel-case: true
+#logging:
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} ===> %msg%n"

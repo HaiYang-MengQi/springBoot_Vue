@@ -1,4 +1,5 @@
 package com.codeCart.service.impl;
+import com.codeCart.RSAUtils;
 import com.codeCart.mapper.UserMapper;
 import com.codeCart.pojo.User;
 import com.codeCart.service.UserService;
@@ -24,8 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String username, String password) {
-
-//todo 用rsa加密               password = RsaUtils.encryptPasswordWithRSA(password);
+                // todo 需要使用加密算法
                 userMapper.register(username,password);
     }
     @Override

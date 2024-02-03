@@ -26,7 +26,7 @@ public class Result <T>{
      *
      * @return 成功结果
      */
-    public static Result success(){
+    public static <E> Result<E> success(){
         return new Result<>(200,"success",null);
     }
     /**
@@ -34,7 +34,7 @@ public class Result <T>{
      * @param message 结果信息
      * @return 错误结果
      */
-    public static Result error(String message){
-        return new Result<>(666,message,null);
+    public static <E> Result<E> error(String message){
+        return new Result<>(500,message,null);
     }
 }
