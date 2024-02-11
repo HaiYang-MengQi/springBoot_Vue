@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	</head>
+	<body>
+		
+		<!-- MVVM模型
+		1. M: 模型(Model) : data中的数据
+		2. V: 视图(View) : 模板代码
+		3. VM: 视图模型(ViewModel) : vue实例
+		观察发现:
+		1: data中的所有属性,最后都出现在VM身上.
+		2: vm身上的属性 及Vue原型上的所有属性,在Vue模板中都可以直接使用 -->
+		
+		<!-- View -->
+		<div id="root" >
+			<h1>学校名称:{{name}}</h1><br> 
+			<h1>学校地址:{{address}}</h1>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// ViewModel
+	const vm = new Vue({
+			el : '#root',
+			data : {//Model
+				name : '尚硅谷',
+				address : '北京'
+			}
+		})
+	</script>
+</html>

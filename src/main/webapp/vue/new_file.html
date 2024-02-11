@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>评论区</title>
+</head>
+<body onload="getComments()">
+        <div id="comments"></div>
+</body>
+<script type="text/javascript">
+    function getComments() {
+		console.log("**,*!")
+        const  id = document.getElementById("comments")
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET","loadComments?id=1",true);
+        xhr.onreadystatechange = function (){
+            if (xhr.status === 200 && xhr.readyState ===4){}
+            }
+			xhr.send()
+        }
+        
+</script>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+		
+	</head>
+	<body>
+		<div id="root"> 
+<!-- 		Vue中的事件修饰符
+		1.prevent: 阻止默认事件(常用)
+		2.stop: 阻止事件冒泡(常用)
+		3.once: 事件触发一次(常用)
+		4.capture: 使用事件的捕获模式
+		5.self: 只有event.target是当前操作元素时才触发事件
+		6.passive: 事件的默认行为立即执行,无需等待事件回调执行完毕 -->
+		
+			<h2>欢迎来到{{name}}学习</h2>
+			<!-- <a href="http://www.atguigu.com" @click="showInfo">点我提示信息</a> -->
+				<a href="http://www.atguigu.com" @click.prevent="showInfo">点我提示信息</a>
+				<div @click="showInfo">
+					<button @click.stop="showInfo">点我提示信息</button>
+				</div>
+				<button @click.once="showInfo">事件只触发一次</button>
+				<div @click.capture="showmsg(1)"> 
+				<!-- 先捕获再冒泡,想要现在捕获阶段处理就要加事件修饰符.capture -->
+					div1
+					<div @click="showmsg(2)">
+						div2
+					</div>
+				</div>
+				<!-- 只有e.target是当前元素时才会触发事件 -->
+				<div @click.self="showInfo">
+					div1
+					<div @click="showInfo">
+						div2
+					</div>
+				</div>
+				
+				<div @click="showInfo(1)">
+					<a href="http://www.atguigu.com" @click.stop.prevent="showInfo(1)">点击我</a>
+ 				</div>
+				
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el : '#root',
+			data : {
+				name : '尚硅谷'
+			},
+			methods : {
+				showInfo(e){
+					console.log(e.target)
+					alert("同学你好")
+				},
+				showmsg(msg){
+					console.log(msg)
+				}
+			}
+		})
+	</script>
+</html>

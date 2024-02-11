@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>我的Vue项目</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	</head>
+	<body>
+		
+		<!-- 想让vue工作,就必须创建一个vue实例,且要传入一个配置对象
+		root容器里的代码依然符合html规范只不过混入了一些特殊的vue语法
+		root容器里的代码被称为vue模板
+		vue实例和容器是一一对应的
+		真实开发中只有一个vue实例,并且配合组件使用
+		{{xxx}}中的xxx要写js表达式,且xxx可以自动读取到data中的所有属性
+		一旦data中的数据发生改变,那么模板中用到该数据的地方也会自动更新 -->
+		<div id="root">
+			<h1>hello {{name}},{{address.toUpperCase()}}</h1>
+		</div>
+		<script>
+			// 创建vue实例
+			new Vue({
+				el : '#root',//el用于指定当前vue实例为那个容器服务,值通常为css选择字符串.
+				data : {//data中用于存储数据,数据供el所指定的容器去使用,值我们暂时先写成一个对象
+					name : '尚硅谷',
+					address : 'abcd',
+				}
+			})
+		</script>
+	</body>
+</html>
+

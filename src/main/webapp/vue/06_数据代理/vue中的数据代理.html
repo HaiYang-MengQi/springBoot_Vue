@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+		
+	</head>
+	<body>
+		<!-- 想让vue工作,就必须创建一个vue实例,且要传入一个配置对象
+		root容器里的代码依然符合html规范只不过混入了一些特殊的vue语法
+		root容器里的代码被称为vue模板
+		vue实例和容器是一一对应的
+		真实开发中只有一个vue实例,并且配合组件使用
+		{{xxx}}中的xxx要写js表达式,且xxx可以自动读取到data中的所有属性
+		一旦data中的数据发生改变,那么模板中用到该数据的地方也会自动更新 -->
+		
+		
+		<!-- >
+		1.Vue中的数据代理:
+		通过vm对象来代理data对象中的属性的操作(读和写)
+		2.Vue中数据代理的好处:
+		更加方便的操作data中的数据
+		3.基本原理:
+		Object.defineProperty把data对象中的属性添加到vm身上
+		为每一个添加到vm身上的属性	,都指定一个getter和setter操作
+		在getter和setter內部去操作(读和写)data中对应的属性 -->
+		<div id="root"> 
+			<h1>学校名称 : {{_data.name}}</h1><br>
+			<h1>学校地址 : {{_data.address}}</h1>
+		</div>
+	</body>
+	<script type="text/javascript">
+		let data ={
+				name : '尚硅谷',
+				address: '宏福科技园'
+			}
+		const vm = new Vue({
+			el : '#root',
+			data : data
+		})
+	</script>
+</html>

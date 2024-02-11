@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+		
+	</head>
+	<body>
+		<div id="root"> 
+			姓:<input type="text" v-model="firstName"/><br>
+			名:<input  type="text" v-model="lastName"/><br>
+			{{fullName}}<!-- 表面上是函数,实际上是执行了get方法后将值作为fullName属性,所以这里不是函数 -->
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el : '#root',
+			data : {
+				firstName : '',
+				lastName : ''
+			},
+			computed : {
+				fullName(){
+					console.log('get被调用了')
+					return this.firstName + '-' + this.lastName
+				}
+			}
+		})
+	</script>
+</html>

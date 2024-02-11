@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+		
+	</head>
+	<body>
+		<div id="root"> 
+		<h2>欢迎来到{{name}}学习</h2>
+			<button v-on:click="showInfo">点我提示信息(不传参)</button><br>
+			<button @click="showInfo2(66,$event)">点我提示信息(传参)</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el : '#root',
+			data : {//只有在data中的数据才会做数据代理
+				name : '尚硅谷',
+				
+			},
+			methods: {
+				showInfo(a,b,c,d) {//函数不可写成箭头函数,否则this是window
+					// alert("同学你好")
+					// console.log(a,b,c,d)
+					// console.log(this)此处的this是vm
+					
+				},
+				showInfo2(data,event){
+					console.log(data,event)
+				}
+			}
+		})
+	</script>
+</html>

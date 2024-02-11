@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+	</head>
+	<body>
+		<!-- 	注意区分: js表达式 和js代码
+			1.表达式: 一个表达式会生成一个值,可以放在任何一个需要值的地方:
+			(1). a
+			(2). a+b
+			(3). demo(1)
+			(4). x==y ? x : y
+			2.js代码(语句)
+			 (1). if语句
+			 (2). for语句 -->
+		<div id="root">
+			<a :href="url">点击我</a>
+			<a :href="Date.now()">点击我</a>
+		</div>
+		<script>
+			// 创建vue实例
+			new Vue({
+				el : '#root',//el用于指定当前vue实例为那个容器服务,值通常为css选择字符串.
+				data : {//data中用于存储数据,数据供el所指定的容器去使用,值我们暂时先写成一个对象
+					url : 'www.baidu.com'//v-bind 使用在指令语法
+				}
+			})
+		</script>
+	</body>
+</html>
