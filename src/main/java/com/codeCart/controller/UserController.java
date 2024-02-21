@@ -2,12 +2,11 @@ package com.codeCart.controller;
 
 
 import com.codeCart.pojo.Result;
-import com.codeCart.service.UserService;
 import com.codeCart.pojo.User;
+import com.codeCart.pojo.UserInfo;
+import com.codeCart.service.UserService;
 import com.codeCart.util.JWTUtils;
 import com.codeCart.util.ThreadLocalUtils;
-import com.codeCart.websocket.WebSocket;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -24,8 +25,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private WebSocket webSocket;
+    private static List<Integer> list = new ArrayList<>();
     @PostMapping("/register")
     public Result<String> register(@Pattern(regexp = "^\\S{4,10}$") String username,@Pattern(regexp = "^\\S{8,16}$") String password)  {
         User u = userService.findByUsername(username);
@@ -59,6 +59,7 @@ public class UserController {
                 map.put("id", u.getId());
                 map.put("username", u.getUsername());
                 String token = JWTUtils.generateToken(map);
+                list.add(u.getId());
                 return Result.success(token);
             }
             return Result.error("密码错误");
@@ -69,22 +70,22 @@ public class UserController {
      * @return 返回用户信息
      */
     @GetMapping("/userInfo")
-    public Result<User> userInfo(){
+    public Result<UserInfo> userInfo(){
     Map<String, Object> map = ThreadLocalUtils.get();
     String username = (String) map.get("username");
     User u = userService.findByUsername(username);
-    return Result.success(u);
+    UserInfo userInfo = userService.getUserInfo(u.getId());
+    return Result.success(userInfo);
     }
 
     /**
      *
-     * @param user 前端传入的数据
+     * @param userInfo 前端传入的数据
      * @return 返回成功消息
      */
     @PutMapping("/update")
-    public Result<Void> update(@RequestBody @Validated User user){
-        System.out.println(user);
-        userService.update(user);
+    public Result<Void> update(@RequestBody @Validated UserInfo userInfo){
+        userService.update(userInfo);
         return Result.success();
     }
 
@@ -101,7 +102,6 @@ public class UserController {
         String oldPwd = (String) map.get("oldPwd");
         String newPwd = (String) map.get("newPwd");
         String rePwd = (String) map.get("rePwd");
-        System.out.println("oldPwd:"+oldPwd+" newPwd:"+newPwd+" rePwd:"+rePwd);
         if(!StringUtils.hasLength(oldPwd) || !StringUtils.hasLength(newPwd)  || !StringUtils.hasLength(rePwd)){
             return Result.error("缺少必要的参数!");
         }
@@ -116,11 +116,6 @@ public class UserController {
         }
         userService.updatePwd(newPwd);
         return Result.success("密码修改成功!");
-    }
-    @PostMapping("/chat")
-    public Result<String> sendMessage(HttpSession session){
-        // todo 问题 : 无法使用http将用户发送消息给指定用户通信到websocket从而开启服务
-        return Result.success("开始聊天!");
     }
 
 }

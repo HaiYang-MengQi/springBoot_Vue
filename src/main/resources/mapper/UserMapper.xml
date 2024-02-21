@@ -3,42 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeCart.mapper.UserMapper">
-    <insert id="register" parameterType="user">
-            insert into user(username,password,registration_time) values(#{username},#{password},now())
+<!--    更新同时更新userinfo表用户注册时间-->
+    <insert id="register" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+            insert into user(username,password) values(#{username},#{password})
     </insert>
     <select id="getUserByUsername" parameterType="java.lang.String" resultType="user">
         select * from user where username = #{username}
     </select>
-    <update id="updateLoginTime" parameterType="Integer">
-        update user set last_login_time = now()
+<!--    更新用户密码的同时更新userinfo表中的密码修改时间-->
+    <update id="updatePwd" parameterType="map">
+        update user set password = #{newPwd}
             where
                 id = #{id}
-    </update>
-    <update id="update" parameterType="user">
-        update user
-        <set>
-            <if test="name!=null and name!= ''">name = #{name},</if>
-            <if test="gender!=null and gender!= ''">gender = #{gender},</if>
-            <if test="age!=null and age!= ''">age = #{age},</if>
-            <if test="address!=null and address!= ''">address = #{address},</if>
-            <if test="email!=null and email!= ''">email = #{email},</if>
-            <if test="phoneNumber!=null and phoneNumber!= ''">phone_number = #{phoneNumber},</if>
-            <if test="birthday!=null and birthday!= ''">birthday = #{birthday},</if>
-            <if test="education!=null and education!= ''">education = #{education},</if>
-        </set>
-        <where>
-            id = #{id}
-        </where>
-    </update>
-    <update id="updateAvatar" parameterType="Integer">
-        update user set avatar = #{avatar}
-            where
-                id = #{id}
-    </update>
-    <update id="updatePwd" parameterType="java.lang.String">
-        update user set password = #{newPwd} , passwordmodified = now()
-            where
-                id = #{id}
-
     </update>
 </mapper>

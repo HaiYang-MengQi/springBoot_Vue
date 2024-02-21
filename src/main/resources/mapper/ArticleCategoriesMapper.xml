@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codeCart.mapper.ArticleCategoriesMapper">
+    <select id="selectAll" resultType="java.lang.String" parameterType="Integer">
+        select type from article_categories 
+        <where>
+            <choose>
+                <when test="create_by != null">
+                    created_by = #{create_by}
+                </when>
+                <otherwise>
+                    1 = 0;
+                </otherwise>
+            </choose>
+        </where>
+        ;
+    </select>
+    <insert id="addCategories" parameterType="articleCategories">
+        insert into article_categories(type,alias,description,created_at,updated_at,created_by)
+        values(#{type},#{alias},#{description},now(),now(),#{createdBy})
+    </insert>
+    <update id="updateCategories" parameterType="articleCategories">
+        update article_categories
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="alias != null">
+                alias = #{alias},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            updated_at = now()
+        </set>
+        <where>
+            <if test="type != null or created_by != null">
+                <choose>
+                    <when test="type != null">
+                        type = #{type}
+                    </when>
+                    <otherwise>
+                        1 = 0
+                    </otherwise>
+                </choose>
+                <if test="created_by != null">
+                    and created_by = #{created_by}
+                </if>
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteCategories" parameterType="java.util.Map">
+        delete from article_categories
+        <where>
+            <choose>
+                <when test="type != null">
+                    type = #{type}
+                </when>
+                <when test="alias != null">
+                    alias = #{alias}
+                </when>
+                <otherwise>
+                    1 = 0 <!-- 这里可以是任何永远不满足的条件 -->
+                </otherwise>
+            </choose>
+            <if test="created_by != null">
+                and created_by = #{created_by}
+            </if>
+        </where>
+    </delete>
+
+</mapper>
