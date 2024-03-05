@@ -15,7 +15,6 @@
                 </otherwise>
             </choose>
         </where>
-        ;
     </select>
     <insert id="addCategories" parameterType="articleCategories">
         insert into article_categories(type,alias,description,created_at,updated_at,created_by)

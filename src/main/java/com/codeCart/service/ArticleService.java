@@ -1,16 +1,14 @@
-package com.codeCart.mapper;
+package com.codeCart.service;
 
 import com.codeCart.pojo.Article;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
-@Mapper
-public interface ArticleMapper {
+public interface ArticleService {
     List<Article> findArticle(Article article);
     void addArticle(Article article);
     void updateArticle(Article article);
     void deleteArticle(String title);
-    List<Article> findArticleByCategories(Map<String,String> map);
+    List<Article> findArticleByCategorie(Map<String,String> map);
 }

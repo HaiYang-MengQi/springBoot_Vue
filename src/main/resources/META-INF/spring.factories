@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=com.codeCart.initializer.IOCInitializer
+org.springframework.context.ApplicationListener=com.codeCart.listener.IOClistener

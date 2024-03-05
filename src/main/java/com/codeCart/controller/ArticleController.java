@@ -1,58 +1,50 @@
 package com.codeCart.controller;
 
-import com.codeCart.pojo.ArticleCategories;
+import com.codeCart.pojo.Article;
 import com.codeCart.pojo.Result;
-import com.codeCart.service.ArticleCategoriesService;
+import com.codeCart.service.ArticleService;
 import com.codeCart.util.ThreadLocalUtils;
-import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/articleCategories")
+@RequestMapping("/article")
 public class ArticleController {
     @Autowired
-    private ArticleCategoriesService articleCategoriesService;
+    private ArticleService articleService;
 
-    /**
-     * 获取分类信息下的全部文章
-     *
-     */
-    @GetMapping("/findAll")
-    public Result<String[]> findCategories() {
-        Map<String, Object> map = ThreadLocalUtils.get();
-        final Integer id = (Integer) map.get("id");
-        return Result.success(articleCategoriesService.selectAll(id));
+    @GetMapping("/find")
+    public Result<List<Article>> findArticle(@RequestBody Article article)
+    {// todo 缺一个请求体什么都不带就是查询全部
+        return Result.success(articleService.findArticle(article));
     }
     @PostMapping("/add")
-    public Result<Void> addCategories(@RequestBody ArticleCategories categories) {
-        Map<String, Object> map = ThreadLocalUtils.get();
-         final Integer id = (Integer) map.get("id");
-        categories.setCreatedBy(id);
-        articleCategoriesService.addCategories(categories);
+    public Result<Void> addArticle(@RequestBody @Validated Article article)
+    {
+        articleService.addArticle(article);
         return Result.success();
     }
     @PutMapping("/update")
-    public Result<Void> updateCategories(@RequestBody ArticleCategories categories) {
-        Map<String, Object> map = ThreadLocalUtils.get();
-        final Integer id = (Integer) map.get("id");
-        categories.setCreatedBy(id);
-        articleCategoriesService.updateCategories(categories);
+    public Result<Void> updateArticle(@RequestBody Article article)
+    {
+        articleService.updateArticle(article);
         return Result.success();
     }
     @DeleteMapping("/delete")
-    public Result<Void> deleteCategories(@RequestParam(required = false) String type, @RequestParam(required = false) String alias) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> map1 = ThreadLocalUtils.get();
-        final Integer id = (Integer) map1.get("id");
-        map.put("created_by", id);
-        map.put("type", type);
-        map.put("alias", alias);
-        articleCategoriesService.deleteCategories(map);
-        return Result.success();
+    public Result<String> deleteArticleByTitle(@RequestParam String title)
+    {
+        articleService.deleteArticle(title);
+        return Result.success("删除成功!");
+    }
+    @GetMapping("/categoriesArticles")
+    public Result<List<Article>> getArticlesByCategoryAndAlias(@RequestParam String type, @RequestParam(required = false) String alias)
+    {
+        Map<String,String> map = Map.of("type",type,"alias",alias);
+        List<Article> articles = articleService.findArticleByCategorie(map);
+        return Result.success(articles);
     }
 }

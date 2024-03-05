@@ -93,7 +93,7 @@ public class UserController {
     public Result<String> updateAvatar(@RequestParam("avatar") @URL String avatar){
         Map<String, Object> m = ThreadLocalUtils.get();
         Integer id = (Integer) m.get("id");
-        userService.updateAvatar(id,avatar);
+        userService.updateAvatar(avatar);
         return Result.success("头像修改成功!");
     }
 

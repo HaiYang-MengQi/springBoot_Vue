@@ -11,5 +11,5 @@ public interface UserService {
       void updatePwd(String newPwd);
       void updateLoginTime(Integer id);
       void update(UserInfo userInfo);
-      void updateAvatar(Integer id,String avatar);
+      void updateAvatar(String avatar);
 }

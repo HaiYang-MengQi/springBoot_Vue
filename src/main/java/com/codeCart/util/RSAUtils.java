@@ -276,7 +276,6 @@ public class RSAUtils {
         try {
             data = Base64.encodeBase64String(encryptByPublicKey(data.getBytes(), PUBLICKEY));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
 
         }

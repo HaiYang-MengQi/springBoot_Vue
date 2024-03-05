@@ -1,0 +1,21 @@
+#开发环境
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/website
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    activate:
+      on-profile: dev
+
+mybatis:
+  mapper-locations:  classpath:mapper/*.xml
+  type-aliases-package: com.codecart.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+#OSS对象存储
+oss:
+  bucketName: bytebazaar
+  endpoint: https://oss-cn-qingdao.aliyuncs.com
+

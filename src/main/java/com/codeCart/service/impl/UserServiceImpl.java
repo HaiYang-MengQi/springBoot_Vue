@@ -1,10 +1,10 @@
 package com.codeCart.service.impl;
-import com.codeCart.RSAUtils;
 import com.codeCart.mapper.UserInfoMapper;
 import com.codeCart.mapper.UserMapper;
 import com.codeCart.pojo.User;
 import com.codeCart.pojo.UserInfo;
 import com.codeCart.service.UserService;
+import com.codeCart.util.LocalDataUtils;
 import com.codeCart.util.ThreadLocalUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAvatar(Integer id, String avatar) {
+    public void updateAvatar(String avatar) {
         Map<String,Object> map = new HashMap<>();
-        map.put("id",id);
+        Map<String,Object> id = ThreadLocalUtils.get();
+        Integer userId = (Integer) id.get("id");
+        map.put("id",userId);
         map.put("avatar",avatar);
         userInfoMapper.updateAvatar(map);
     }
-
-
 }

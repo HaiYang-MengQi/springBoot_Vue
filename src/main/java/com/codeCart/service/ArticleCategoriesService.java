@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface ArticleCategoriesService {
-    String[] selectAll(Integer id);
+    String[] selectAll();
     void addCategories(ArticleCategories categories);
     void updateCategories(ArticleCategories categories);
-    void deleteCategories(Map<String,Object> map);
+    void deleteCategories(String type, String alias);
 }

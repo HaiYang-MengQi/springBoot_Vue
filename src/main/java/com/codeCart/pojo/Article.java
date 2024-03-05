@@ -1,6 +1,7 @@
 package com.codeCart.pojo;
 
 
+import com.codeCart.anno.State;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +12,8 @@ public class Article {
   private String title;
   private String author;
   private String context;
+  @State
+  private String state;
   private Date createdAt;
   private Date updatedAt;
   private String description;
