@@ -18,4 +18,7 @@ mybatis:
 oss:
   bucketName: bytebazaar
   endpoint: https://oss-cn-qingdao.aliyuncs.com
-
+server:
+  port: 8080
+  servlet:
+    context-path: /

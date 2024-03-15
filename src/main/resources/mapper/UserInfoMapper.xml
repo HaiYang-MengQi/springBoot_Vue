@@ -3,20 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeCart.mapper.UserInfoMapper">
-    <select id="getUserInfobyId" parameterType="Integer" resultType="userinfo">
+<!--    idx_user_id 为此处索引名-->
+    <select id="getUserInfo" parameterType="Integer" resultType="userinfo">
         select * from userinfo where user_id = #{id}
     </select>
-
-    <!--    更新同时更新user表用户注册时间-->
-    <insert id="insertRegistrationTime" parameterType="Integer">
-        insert into userinfo(user_id,registration_time) values (#{id},now())
-    </insert>
-    <update id="updateLoginTime" parameterType="Integer">
+    <!--    idx_user_id 为此处索引名-->
+    <update id="updateUserInfoLoginTime" parameterType="Integer">
         update userinfo set last_login_time = now()
         where
             user_id = #{id}
     </update>
-    <update id="update" parameterType="userinfo">
+    <update id="updateUserInfo" parameterType="userinfo">
         update userinfo
         <set>
             <if test="age!=null and age!= ''">age = #{age},</if>
@@ -32,13 +29,16 @@
             user_id = #{id}
         </where>
     </update>
-    <update id="updateAvatar" parameterType="map">
+    <update id="updateUserInfoAvatar" parameterType="map">
         update userinfo set avatar = #{avatar}
         where
             user_id = #{id}
     </update>
-    <!--    更新用户密码的同时更新userinfo表中的密码修改时间-->
-    <update id="updatePwdTime" parameterType="Integer">
+    <insert id="updateUserInfoRegistrationTime" parameterType="Integer">
+        insert into userinfo(user_id,registration_time) values (#{id},now())
+    </insert>
+    <!--    idx_user_id 为此处索引名-->
+    <update id="updateUserInfoPwdModifyTime" parameterType="Integer">
     update userinfo set passwordmodified = now()
     where
         user_id = #{id}

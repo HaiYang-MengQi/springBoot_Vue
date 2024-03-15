@@ -7,10 +7,10 @@ import java.util.Map;
 
 @Mapper
 public interface UserInfoMapper {
-    UserInfo getUserInfobyId(Integer id);
-    void insertRegistrationTime(Integer id);
-    void updateLoginTime(Integer id);
-    void update(UserInfo userInfo);
-    void updateAvatar(Map<String,Object> map);
-    void updatePwdTime(Integer id);
+    UserInfo getUserInfo(Integer id);
+    void updateUserInfoLoginTime(Integer id);
+    void updateUserInfo(UserInfo userInfo);
+    void updateUserInfoAvatar(Map<String,Object> map);
+    void updateUserInfoRegistrationTime(Integer id);
+    void updateUserInfoPwdModifyTime(Integer id);
 }

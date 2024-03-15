@@ -19,5 +19,4 @@ public class Article {
   private String description;
   private Integer artCateId;
   private Integer userId;
-
 }

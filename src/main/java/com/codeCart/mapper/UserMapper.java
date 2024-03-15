@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Mapper
 public interface UserMapper {
-     User getUserByUsername(String username);
-     int register(User user);
-     void updatePwd(Map<String,Object> map);
+     User getUserByUserName(String username);
+     int userRegister(User user);
+     void updateUserPwd(Map<String,Object> map);
 }

@@ -1,5 +1,6 @@
 package com.codeCart.util;
 
+import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
@@ -7,8 +8,6 @@ import com.aliyun.oss.common.auth.CredentialsProviderFactory;
 import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
-import com.aliyuncs.exceptions.ClientException;
-import com.codeCart.listener.GetObjectProgressListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -26,21 +25,15 @@ public class FileDownloadUtils {
     private String bucketName;
     @Value("${oss.endpoint}")
     private String endpoint;
-    public List<Object> download(String objectName) throws Exception {
+    OSSObject oss;
+    public OSSObject download(String objectName) throws Exception {
         String savePath = "D:\\"+objectName;
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
         OSS ossClient = new OSSClientBuilder().build(endpoint, credentialsProvider);
         try {
-            // ossObject包含文件所在的存储空间名称、文件名称、文件元数据以及一个输入流。
-            OSSObject ossObject = ossClient.getObject(bucketName, objectName);
-            ossClient.getObject(new GetObjectRequest(bucketName, objectName).
-                            <GetObjectRequest>withProgressListener(new GetObjectProgressListener()),
-                    new File(savePath));
-            BufferedInputStream bis = new BufferedInputStream(ossObject.getObjectContent());
-            List<Object> list = new ArrayList<>();
-            list.add(bis);
-            list.add(ossObject);
-            return list;
+            // 下载Object到本地文件，并保存到指定的本地路径中。如果指定的本地文件存在会覆盖，不存在则新建。
+            // 如果未指定本地路径，则下载后的文件默认保存到示例程序所属项目对应本地路径中。
+           oss = ossClient.getObject(new GetObjectRequest(bucketName, objectName));
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
@@ -48,7 +41,7 @@ public class FileDownloadUtils {
             System.out.println("Error Code:" + oe.getErrorCode());
             System.out.println("Request ID:" + oe.getRequestId());
             System.out.println("Host ID:" + oe.getHostId());
-        } catch (Throwable ce) {
+        } catch (ClientException ce) {
             System.out.println("Caught an ClientException, which means the client encountered "
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
@@ -58,6 +51,6 @@ public class FileDownloadUtils {
                 ossClient.shutdown();
             }
         }
-        return null;
+        return oss;
     }
 }

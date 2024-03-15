@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字节注册</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <form>
+        用户名:<input type="text" name="username" v-model:value="username" required>
+        <br>
+        密码:<input type="password" name="password" v-model:value="password" required><span>{{passwordRegex}}</span>
+        <br>
+        再次输入密码:<input type="password" name="password2" v-model:value="password2" @keydown.alt.enter="copy" required >
+        <span style="font-size: 4px">在您确保第一次密码输入正确的基础上可以按alt+Enter一键输入刚刚的密码</span>
+        <br>
+        <button type="submit" @click.self.prevent="register">注册</button>
+    </form>
+</div>
+<script>
+    var xhr = new XMLHttpRequest()
+    var vm = new Vue({
+        el : '#root',
+        data : {
+            username : '',
+            password : '',
+            password2 : '',
+            passwordRegex : ''
+        },
+        methods : {
+            register(){
+                const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+                if (!passwordRegex.test(this.password)) {
+                    this.passwordRegex = "密码必须至少包含一个字母和一个数字，并且长度至少为8个字符。";
+                    return; // 中止注册流程
+                }
+                else {
+                    xhr.open('POST', '/user/register', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        username : this.username,
+                        password : this.password
+                    }))
+                    xhr.onreadystatechange = ()=> {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                        }
+                    }
+                }
+            },
+            copy(){
+                this.password2 = this.password
+            }
+        }
+    })
+</script>
+</body>
+</html>

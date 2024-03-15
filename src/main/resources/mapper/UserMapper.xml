@@ -3,15 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.codeCart.mapper.UserMapper">
-<!--    更新同时更新userinfo表用户注册时间-->
-    <insert id="register" parameterType="user" useGeneratedKeys="true" keyProperty="id">
-            insert into user(username,password) values(#{username},#{password})
-    </insert>
-    <select id="getUserByUsername" parameterType="java.lang.String" resultType="user">
+    <!--    覆盖索引,idx_username为索引名-->
+    <select id="getUserByUserName" parameterType="java.lang.String" resultType="user">
         select * from user where username = #{username}
     </select>
-<!--    更新用户密码的同时更新userinfo表中的密码修改时间-->
-    <update id="updatePwd" parameterType="map">
+<!--    更新同时更新userinfo表用户注册时间-->
+    <insert id="userRegister" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+            insert into user(username,password) values(#{username},#{password})
+    </insert>
+    <update id="updateUserPwd" parameterType="map">
         update user set password = #{newPwd}
             where
                 id = #{id}

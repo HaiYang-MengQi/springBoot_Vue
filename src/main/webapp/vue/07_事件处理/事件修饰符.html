@@ -10,15 +10,15 @@
 		<div id="root"> 
 <!-- 		Vue中的事件修饰符
 		1.prevent: 阻止默认事件(常用)
-		2.stop: 阻止事件冒泡(常用)
-		3.once: 事件触发一次(常用)
-		4.capture: 使用事件的捕获模式
-		5.self: 只有event.target是当前操作元素时才触发事件
-		6.passive: 事件的默认行为立即执行,无需等待事件回调执行完毕 -->
+		2.stop: 阻止事件冒泡,就是当前类型标签的事件向dom上一级继续传递触发
+		3.once: 事件触发一次,触发过后监听器解绑
+		4.capture: 使用事件的捕获模式,切换到dom从父到子触发相同事件
+		5.self: 只有event.target是当前操作元素时才触发事件,只有是点击自己的按钮才能触发,避免冒泡影响
+		6.passive: 事件的默认行为立即执行,无需等待事件回调执行完毕,跳过js代码直接滚动 -->
 		
 			<h2>欢迎来到{{name}}学习</h2>
 			<!-- <a href="http://www.atguigu.com" @click="showInfo">点我提示信息</a> -->
-				<a href="http://www.atguigu.com" @click.prevent="showInfo">点我提示信息</a>
+				<a href="http://www.atguigu.com" @click.prevent="showInfo">点我提示信息1</a>
 				<div @click="showInfo">
 					<button @click.stop="showInfo">点我提示信息</button>
 				</div>

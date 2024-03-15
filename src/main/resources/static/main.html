@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>字节主页</title>
+</head>
+<body>
+<div id="root">
+    {{message}}
+</div>
+<script>
+    var app = new Vue({
+        el :　'#root',
+        data : {
+            message : sessionStorage.getItem('jwt')
+        }
+    });
+
+</script>
+</body>
+</html>

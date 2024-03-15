@@ -3,13 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>登录页</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
 </head>
 <body>
-    <h1>值得学习的网站</h1>
-    <form action="/user/login" method="post">
-        账户名:<input type="text" name="username" placeholder="请输入用户名"><br>
-        密码:<input type="password" name="password" placeholder="请输入密码">
-        <input type="submit" value="登录">
+<div id="root">
+    <h1>字节跳动</h1>
+    <form>
+        账户名:<input type="text" name="username" v-model:value="username" @blur="usernameRegexMethod" required><span>{{usernameRegex}}</span>
+        <br>
+        密码:<input type="password" name="password" v-model:value="password" @blur="passwordRegexMethod" required><span>{{passwordRegex}}</span>
+        <br>
+        <button type="submit" @click.self.prevent="login">登录</button>
     </form>
+    <br>
+    当前时间:{{currentTime}}
+</div>
+<script>
+    xhr = new XMLHttpRequest()
+    // 创建vue实例
+    var vm = new Vue({
+        data : {
+            username : '',
+            password : '',
+            currentTime : '',
+            usernameRegex : '',
+            passwordRegex : ''
+        },
+        methods : {
+            usernameRegexMethod(){
+                const usernameRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,9}$/
+                // 验证用户名是否符合正则表达式要求
+                if (!usernameRegex.test(this.username)) {
+                    this.usernameRegex = "用户名必须是6到9位,只能包含英文、数字.";
+                }
+                else {
+                    this.usernameRegex = ''
+                }
+            },
+            passwordRegexMethod(){
+                const passwordRegex = /^[a-zA-Z0-9]{8,11}$/;
+                if (!passwordRegex.test(this.password)) {
+                    this.passwordRegex = "密码必须是英文或者数字,8-11位,且不为空";
+                }else {
+                    this.passwordRegex = ''
+                }
+            },
+            login(){
+                if (!this.usernameRegex && !this.passwordRegex) {
+                    xhr.open('POST', '/user/login', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify({
+                        username : this.username,
+                        password : this.password
+                    }))
+                    xhr.onreadystatechange = ()=> {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            jwt = JSON.parse(xhr.response)
+                            message = jwt.message
+                            if(message === 'success') {
+                                sessionStorage.setItem('jwt', jwt.data)
+                                alert('登录成功,字节跳动欢迎您')
+                                window.location.href = '/user/index'}
+                            else {
+                                alert(message)
+                                this.password = ''
+                            }
+                        }
+                    }
+                }
+            },
+        },
+        mounted(){
+                // 在组件挂载后，每秒更新一次时间
+                setInterval(() => {
+                    var localTime = new Date();
+                    var year = localTime.getFullYear();
+                    var month = localTime.getMonth() + 1;
+                    var day = localTime.getDate();
+                    var hours = localTime.getHours();
+                    var minutes = localTime.getMinutes();
+                    var seconds = localTime.getSeconds();
+                    this.currentTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+                }, 1000);
+            }
+    })
+    vm.$mount('#root')
+</script>
 </body>
 </html>

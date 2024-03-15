@@ -89,6 +89,13 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>3.17.4</version>
         </dependency>
+        <!-- 在pom.xml中添加Spring Security依赖 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.4.6</version> <!-- 使用当前最新的兼容版本 -->
+        </dependency>
+
     </dependencies>
 
     <build>

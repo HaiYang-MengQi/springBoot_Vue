@@ -23,11 +23,11 @@
 		更加方便的操作data中的数据
 		3.基本原理:
 		Object.defineProperty把data对象中的属性添加到vm身上
-		为每一个添加到vm身上的属性	,都指定一个getter和setter操作
+		为每一个添加到vm身上的属性,都指定一个getter和setter操作
 		在getter和setter內部去操作(读和写)data中对应的属性 -->
 		<div id="root"> 
-			<h1>学校名称 : {{_data.name}}</h1><br>
-			<h1>学校地址 : {{_data.address}}</h1>
+			<h1>学校名称 : {{name}}</h1><br>
+			<h1>学校地址 : {{address}}</h1>
 		</div>
 	</body>
 	<script type="text/javascript">
