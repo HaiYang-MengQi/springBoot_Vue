@@ -52,11 +52,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     /**
-     * @param id
+     * @param map
      */
     @Override
-    public void updateUserInfoRegistrationTime(Integer id) {
-        userInfoMapper.updateUserInfoRegistrationTime(id);
+    public void updateUserInfoRegistrationTime(Map<String,Object> map) {
+        userInfoMapper.updateUserInfoRegistrationTime(map);
     }
 
     /**

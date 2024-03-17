@@ -7,9 +7,7 @@ import com.codeCart.pojo.User;
 import com.codeCart.pojo.UserInfo;
 import com.codeCart.service.UserInfoService;
 import com.codeCart.service.UserService;
-import com.codeCart.util.BCryptUtils;
-import com.codeCart.util.JWTUtils;
-import com.codeCart.util.ThreadLocalUtils;
+import com.codeCart.util.*;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -42,7 +37,7 @@ public class UserController {
         //通过查询用户是否存在
         User u = userService.getUserByUserName(userDTO.getUsername());
         if(u == null){
-            return Result.error("用户名错误");
+            return Result.error("该用户不存在");
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if(passwordEncoder.matches(userDTO.getPassword(),u.getPassword())){
@@ -53,9 +48,11 @@ public class UserController {
         return Result.error("密码错误");
     }
     @PostMapping("/register")
-    public Result<String> userRegister(@RequestBody @Validated UserDTO userDTO)  {
+    public Result<String> userRegister(@RequestBody @Validated(UserDTO.Registration.class) UserDTO userDTO) throws Exception {
         User u = userService.getUserByUserName(userDTO.getUsername());
         if (u == null) {
+            String verificationCode = VerificationCode.generateVerificationCode();
+            SMSUtils.sendSms(userDTO.getPhone(),verificationCode);//todo 应该添加防止用户恶意获取验证码的功能,应该是通过验证码进行验证
             userService.userRegister(userDTO);
             return Result.success("注册成功!现在您可以登录了");
         } else {

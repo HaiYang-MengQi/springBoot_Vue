@@ -34,7 +34,10 @@ public class UserServiceImpl implements UserService {
         UserBO userBO = new UserBO(user);
         userBO.encryptPassword();
         userMapper.userRegister(user);
-        userInfoService.updateUserInfoRegistrationTime(user.getId());
+        Map<String,Object> map = new HashMap<>();
+        map.put("id",user.getId());
+        map.put("phone",userDTO.getPhone());
+        userInfoService.updateUserInfoRegistrationTime(map);
     }
     @Override
     public void updateUserPwd(String newPwd) {

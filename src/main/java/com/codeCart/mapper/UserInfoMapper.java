@@ -11,6 +11,6 @@ public interface UserInfoMapper {
     void updateUserInfoLoginTime(Integer id);
     void updateUserInfo(UserInfo userInfo);
     void updateUserInfoAvatar(Map<String,Object> map);
-    void updateUserInfoRegistrationTime(Integer id);
+    void updateUserInfoRegistrationTime(Map<String,Object> map);
     void updateUserInfoPwdModifyTime(Integer id);
 }

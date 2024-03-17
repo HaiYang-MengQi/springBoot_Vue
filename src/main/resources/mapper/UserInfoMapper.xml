@@ -34,8 +34,8 @@
         where
             user_id = #{id}
     </update>
-    <insert id="updateUserInfoRegistrationTime" parameterType="Integer">
-        insert into userinfo(user_id,registration_time) values (#{id},now())
+    <insert id="updateUserInfoRegistrationTime" parameterType="java.util.Map">
+        insert into userinfo(user_id,registration_time,phone_number) values (#{id},now(),#{phone})
     </insert>
     <!--    idx_user_id 为此处索引名-->
     <update id="updateUserInfoPwdModifyTime" parameterType="Integer">
