@@ -17,6 +17,8 @@ Appbazaar 旨在为编程学习者提供一个综合的学习和交流平台。�
 
 要使用 Appbazaar，您需要注册一个账户或登录已有账户。注册过程简单快捷，您只需提供邮箱地址和设置密码即可。
 项目开始的起点:http://localhost:8080/index.html
+此项目需要在您的本地环境变量中引入阿里云OSS服务的相关环境变量
+它们分别为OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET
 
 ### 浏览学习资源和讨论帖子
 

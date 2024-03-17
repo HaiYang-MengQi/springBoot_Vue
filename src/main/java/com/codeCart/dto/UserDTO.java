@@ -9,4 +9,6 @@ public class UserDTO {
     private String username;
     @Pattern(regexp = "^\\S{8,16}$")
     private String password;
+    @Pattern(regexp = "^1[3456789]\\d{9}$")
+    private String phoneNum;
 }
